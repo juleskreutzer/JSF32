@@ -15,3 +15,10 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
+/JSF32Week15/JavaFXApplication1/nbproject/private/
+/JSF32Week15/JSF32Week12/build/
+/JSF32Week15/JSF32Week12/dist/
+/JSF32Week15/JSF32Week12/nbproject/private/
+/JSF32Week15/Opdracht/build/
+/JSF32Week15/Opdracht/dist/
+/JSF32Week15/Opdracht/nbproject/private/
