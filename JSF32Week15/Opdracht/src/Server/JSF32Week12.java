@@ -6,6 +6,7 @@
 package Server;
 
 import calculate.Runner;
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.Console;
@@ -14,6 +15,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -34,23 +37,30 @@ public class JSF32Week12 {
     private String ip;
     private static final Logger LOG = Logger.getLogger(JSF32Week12.class.getName());
     
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         // TODO code application logic here
         
         ServerSocket server = new ServerSocket(9999);
         LOG.log(Level.INFO, "Server is running. Listening on port: {0}", server.getLocalPort());
 
+        
         while(true)
         {
             Socket socket = server.accept();
             LOG.log(Level.INFO, "New Client Connected: {0}", socket.getInetAddress());
             // Get the level
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            int level = in.read();
-            System.out.print("---");
-            LOG.log(Level.INFO, "Received {0}", level);
             
-            Thread thread = new Thread(new Runner(socket, level));
+//            ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+//            ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+            
+//            if(socket.isClosed())
+//            {
+//                socket = server.accept();
+//                in = new ObjectInputStream(socket.getInputStream());
+//                out = new ObjectOutputStream(socket.getOutputStream());
+//            }
+//            
+            Thread thread = new Thread(new Runner(socket));
             thread.start();
             
         }

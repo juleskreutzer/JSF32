@@ -5,6 +5,8 @@
 package Server;
 
 import Server.Edge;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import javafx.scene.paint.Color;
 
@@ -18,12 +20,14 @@ public class KochFractal extends Observable {
     private int nrOfEdges = 3;  // The number of edges in the current level of the fractal
     private float hue;          // Hue value of color for next edge
     private boolean cancelled;  // Flag to indicate that calculation has been cancelled 
+    private List<Edge> edges = new ArrayList<>();
 
     private void drawKochEdge(double ax, double ay, double bx, double by, int n) {
         if (!cancelled) {
             if (n == 1) {
                 hue = hue + 1.0f / nrOfEdges;
                 Edge e = new Edge(ax, ay, bx, by, Color.hsb(hue*360.0, 1.0, 1.0));
+                edges.add(e);
                 this.setChanged();
                 this.notifyObservers(e);
             } else {
@@ -75,4 +79,6 @@ public class KochFractal extends Observable {
     public int getNrOfEdges() {
         return nrOfEdges;
     }
+    
+    public List<Edge> getEdges() { return edges; }
 }

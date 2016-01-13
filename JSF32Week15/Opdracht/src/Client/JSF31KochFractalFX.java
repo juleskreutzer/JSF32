@@ -5,6 +5,8 @@
 package Client;
 
 import calculate.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,6 +15,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -88,28 +92,7 @@ public class JSF31KochFractalFX extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        try {
-            try (Socket socket = new Socket("localhost", 9999)) {
-                
-                /* Please choose either the code for example a) or b) */
-                
-                // Example a) Correct order of initialization
-                ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-                ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-                // End of correct initialization
-                out.write(2);
-                // Example b) Correct order of initialization
-                //ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-                //ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-                // End of example b)
-                 
-                
-                int i = (int) in.readObject();
-                LOG.log(Level.INFO, "Received {0}", i);
-            }
-        } catch (IOException | ClassNotFoundException ex) {
-            LOG.log(Level.SEVERE, null, ex);
-        }
+        
         // Define grid pane
         GridPane grid;
         grid = new GridPane();
@@ -154,6 +137,7 @@ public class JSF31KochFractalFX extends Application {
             @Override
             public void handle(ActionEvent event) {
                 increaseLevelButtonActionPerformed(event);
+                requestEdges(currentLevel);
             }
         });
         grid.add(buttonIncreaseLevel, 3, 6);
@@ -165,6 +149,7 @@ public class JSF31KochFractalFX extends Application {
             @Override
             public void handle(ActionEvent event) {
                 decreaseLevelButtonActionPerformed(event);
+                requestEdges(currentLevel);
             }
         });
         grid.add(buttonDecreaseLevel, 5, 6);
@@ -412,7 +397,7 @@ public class JSF31KochFractalFX extends Application {
         Edge e1 = edgeAfterZoomAndDrag(e);
 
         // Set line color
-        gc.setStroke(Color.WHITE);
+        //gc.setStroke(Color.WHITE);
 
         // Set line width depending on level
         if (currentLevel <= 3) {
@@ -553,5 +538,43 @@ public class JSF31KochFractalFX extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+    }
+    
+    private void requestEdges(int level)
+    {
+        System.out.print("Current level is: " + level);
+        try {
+            Socket socket = new Socket("localhost", 9999);                                                          socket.close();
+            try {
+                
+                /* Please choose either the code for example a) or b) */
+                
+                // Example a) Correct order of initialization
+                ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+                ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+                // End of correct initialization
+               
+                out.writeObject(level);
+                out.flush();
+                
+                
+                // Example b) Correct order of initialization
+                //ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+                //ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+                // End of example b)
+                List<Edge> edges = new ArrayList<>();
+                edges = (List<Edge>)in.readObject();
+                for(Edge e : edges)
+                {
+                    this.drawEdge(e);
+                }
+            }
+            finally{
+                socket.close();
+            }
+        } catch (IOException | ClassNotFoundException ex) {
+            LOG.log(Level.SEVERE, null, ex);
+        }
+        
     }
 }
