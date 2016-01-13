@@ -202,7 +202,7 @@ public class JSF31KochFractalFX extends Application {
         grid.add(progressBarBottom, 2, 7);
         
         // Create new watch
-        Path dir = Paths.get("/media/jules/secondDisk/JSF32/week13/");
+        Path dir = Paths.get("/");
         
         try{
             WatchRunner watch = new WatchRunner(dir, false, this);

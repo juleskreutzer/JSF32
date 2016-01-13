@@ -397,7 +397,7 @@ public class JSF31KochFractalFX extends Application {
         Edge e1 = edgeAfterZoomAndDrag(e);
 
         // Set line color
-        //gc.setStroke(Color.WHITE);
+        gc.setStroke(Color.WHITE);
 
         // Set line width depending on level
         if (currentLevel <= 3) {

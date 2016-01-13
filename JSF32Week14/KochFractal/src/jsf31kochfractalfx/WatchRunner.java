@@ -142,7 +142,8 @@ public class WatchRunner implements Runnable {
                 if(filename.toString().equals("MappedResultWritten.txt") && event.kind().name().equals("ENTRY_CREATE"))
                 {
                     try {
-                        RandomAccessFile file = new RandomAccessFile(new File("/media/jules/secondDisk/JSF32/week13/MappedResultWritten.txt"), "r");
+//                        RandomAccessFile file = new RandomAccessFile(new File("/media/jules/secondDisk/JSF32/week13/MappedResultWritten.txt"), "r");
+                          RandomAccessFile file = new RandomAccessFile(new File("/MappedResultWritten.txt"), "r");
                         
                         FileChannel fc = file.getChannel();
                         MappedByteBuffer out = fc.map(FileChannel.MapMode.READ_ONLY, 0, file.length());

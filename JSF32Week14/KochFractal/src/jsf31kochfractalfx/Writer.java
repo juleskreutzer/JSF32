@@ -64,8 +64,10 @@ public class Writer implements Observer {
         
         try{
             
-            File file = new File("/media/jules/secondDisk/JSF32/week13/MappedResult.txt");
-            File file2 = new File("/media/jules/secondDisk/JSF32/week13/MappedResultWritten.txt");
+//            File file = new File("/media/jules/secondDisk/JSF32/week13/MappedResult.txt");
+//            File file2 = new File("/media/jules/secondDisk/JSF32/week13/MappedResultWritten.txt");
+            File file = new File("/MappedResult.txt");
+            File file2 = new File("/MappedResultWritten.txt");
             
             //Delete the file; we will create a new file
             file.delete();
@@ -99,7 +101,8 @@ public class Writer implements Observer {
             System.out.print("Result to MappedResult.txt done!");
             
             // Write text
-            dos = new DataOutputStream(new FileOutputStream("/media/jules/secondDisk/JSF32/week12/result.txt"));
+            //dos = new DataOutputStream(new FileOutputStream("/media/jules/secondDisk/JSF32/week12/result.txt"));
+            dos = new DataOutputStream(new FileOutputStream("/result.txt"));
             dos.writeInt(level);
             for(Edge e : edges)
             {
@@ -116,7 +119,8 @@ public class Writer implements Observer {
             
             
             // Write text with buffer
-            dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream("/media/jules/secondDisk/JSF32/week12/result_buffer.txt")));
+//            dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream("/media/jules/secondDisk/JSF32/week12/result_buffer.txt")));
+            dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream("/result_buffer.txt")));
             dos.writeInt(level);
             for(Edge e : edges)
             {
@@ -132,7 +136,8 @@ public class Writer implements Observer {
             System.out.print("DataOutputStream to result_buffer.txt done!\n");
             
             // Write to bin file
-            dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream("/media/jules/secondDisk/JSF32/week12/result_buffer.bin")));
+            //dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream("/media/jules/secondDisk/JSF32/week12/result_buffer.bin")));
+            dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream("/result_buffer.bin")));
             dos.writeInt(level);
             for(Edge e : edges)
             {
@@ -147,7 +152,9 @@ public class Writer implements Observer {
             dos.close();
             System.out.print("DataOutputStream to result_buffer.bin done!\n");
             
-            dos = new DataOutputStream(new FileOutputStream("/media/jules/secondDisk/JSF32/week12/result.bin"));
+            //dos = new DataOutputStream(new FileOutputStream("/media/jules/secondDisk/JSF32/week12/result.bin"));
+            dos = new DataOutputStream(new FileOutputStream("/result.bin"));
+
             dos.writeInt(level);
             for(Edge e : edges)
             {
